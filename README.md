@@ -5,7 +5,9 @@
 [![Status: Stable](https://img.shields.io/badge/Status-Stable-green.svg)](https://imagxp.dev)
 [![Spec: v1.2](https://img.shields.io/badge/Spec-v1.2-blue.svg)](./spec/v1.2.md)
 
-**IMAGXP** is the open standard for the AI-Web Economy. It replaces the adversarial "Scraping War" with a cryptographic, automated handshake between **Publishers** (Content Owners) and **Agents** (AI Consumers).
+**IMAGXP** is the open standard for the AI-Web Economy.
+
+As AI Chatbots replace traditional web traffic, the **AdSense model is collapsing**, threatening the future of the open web. IMAGXP restores **Ecosystem Balance** by replacing the adversarial "Scraping War" with a cryptographic, automated handshake grounded in **Identity, Monetization, and Governance**. It ensures **Publishers** are paid and **Agents** get clean data.
 
 **🌐 Website:** [https://imagxp.dev](https://imagxp.dev)
 
