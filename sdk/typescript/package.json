@@ -1,7 +1,24 @@
 {
   "name": "@imagxp/protocol",
-  "version": "1.1.8",
+  "version": "1.0.0",
   "description": "TypeScript reference implementation of IMAGXP v1.1",
+  "keywords": [
+    "imagxp",
+    "aamp",
+    "protocol",
+    "agent",
+    "ai",
+    "monetization",
+    "content negotiation",
+    "publisher",
+    "middleware",
+    "robots.txt",
+    "crawler",
+    "llm",
+    "rag",
+    "seo",
+    "verification"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {

@@ -17,13 +17,15 @@ The web is currently broken. Agents scrape for free, and Publishers block them v
 
 1.  **Identity** (Anti-Spoofing): Agents sign requests. Publishers verify them via DNS.
 2.  **Monetization** (The Broker): Zero-friction micro-payments ($0.001) for clean data.
-3.  **Governance** (The Rules): Publishers set strict policies (No Training, RAG Only) that are cryptographically enforced.
+3.  **Governance** (The Rules): Publishers set strict policies (No Training, RAG Only), while Agents enforce **Quality Standards** (No SEO Spam, No AI Slop) to ensure a fair and valuable exchange.
 
 [📖 Read the Architecture Deep Dive](./docs/ARCHITECTURE.md) | [❓ Why IMAGXP?](./docs/WHY_IMAGXP.md)
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Usage Snippets
+
+> **Note:** These are minimal snippets to demonstrate the API. For a complete, running production setup, please read the [Official Installation Guide](./installation/INSTALLATION.md).
 
 Follow this exact order to build the full loop.
 
@@ -47,8 +49,8 @@ const response = await agent.fetch("https://nytimes.com", {
 });
 ```
 
-### 2. The Broker (The Bank)
-*Goal: Issue "Visas" (Auth Tokens) to Agents so they can pay Publishers.*
+### 2. The Broker (The Bank) - *Optional*
+*Goal: Issue "Visas" (Auth Tokens) to Agents. Required only for centralized clearing; P2P payments can skip this.*
 
 ```typescript
 import { SignJWT } from 'jose';
@@ -73,7 +75,7 @@ const imagxp = IMAGXPNext.init({
   policy: {
     requireIdentityBinding: true,  // 1. Anti-Spoofing (Security)
     monetization: {
-      brokerUrl: "https://broker.imagxp.network" // 2. Enable Payments (optional)
+      brokerUrl: "https://broker.imagxp.network" // 2. Enable Payments (Optional)
     }
   }
 });

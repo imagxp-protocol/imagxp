@@ -22,10 +22,24 @@ For any change that alters the Protocol Specification (breaking changes or new h
 2.  **Discussion**: 30-day comment period on GitHub Discussions.
 3.  **Vote**: Steering Committee votes. Simple majority wins.
 
-### 2.2 Security Patches (Critical)
+### 5. Neutrality Pledges (Critical)
 Security vulnerabilities are patched immediately by Maintainers without a public RFC process, to prevent zero-day exploits. Disclosure follows standard Responsible Disclosure norms.
 
-## 3. Neutrality Pledge
+### 2.3 Dispute Resolution
+Disputes regarding content quality scoring or bond slashing are handled by the **Arbitration DAO** (Decentralized Autonomous Organization) or a designated sub-committee.
+*   **Appeals**: Publishers can appeal a "Low Quality" flag by staking tokens.
+*   **Audits**: Random manual audits check if Agents are "over-flagging" (censorship) or Publishers are "under-delivering" (spam).
+
+## 3. Content & Quality Standards
+The Steering Committee maintains the **"IMAGXP Quality Definitions"**:
+1.  **Human Verified**: Content with cryptographic proof of human authorship (e.g., World ID, Government ID, or reputable employment).
+2.  **AI Usage**: Guidelines on acceptable AI-assistance vs. unacceptable "AI Slop".
+3.  **Spam Definitions**: Objective criteria for SEO spam, keyword stuffing, and cloaking.
+
+## 4. Economic Governance (The Bond)
+*   **Broker Accreditation**: Rules for who can be a trusted Broker (issuing Visas).
+*   **Slashing Conditions**: Under what evidence a Publisher's or Agent's reputation bond is destroyed.
+
 IMAGXP pledges to remain:
 *   **Platform Neutral**: Works on Vercel, AWS, Cloudflare, Node, Python, Go.
 *   **Broker Neutral**: Does not enforce any specific payment provider.
