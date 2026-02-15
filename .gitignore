@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+pnpm-lock.yaml
+yarn.lock
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# System Files
+.DS_Store
+Thumbs.db
+.env
+.env.local
+*.log
+npm-debug.log*
+
+# IDE settings (Optional)
+.vscode/
+.idea/

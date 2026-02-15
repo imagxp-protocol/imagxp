@@ -1,0 +1,36 @@
+{
+  "name": "@imagxp/protocol",
+  "version": "1.1.2",
+  "description": "Reference implementation of the Identity Monetization Auto Governance Exchange Protocol (IMAGXP)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "ts-node test/handshake.spec.ts",
+    "lint": "eslint src/**/*.ts",
+    "prepublishOnly": "npm run test && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imagxp-protocol/imagxp.git"
+  },
+  "keywords": [
+    "ai",
+    "protocol",
+    "access-metering",
+    "transparency",
+    "infrastructure",
+    "standard"
+  ],
+  "author": "Open Infrastructure Initiative",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0",
+    "@types/node": "^18.0.0"
+  }
+}
