@@ -42,5 +42,5 @@ We require **Code Proof**.
 
 ## 🚫 What We Don't Accept
 *   "Vibe Code" or generated slop without architectural thought.
-*   Changes that break the v1.2 Spec backward compatibility.
+*   Changes that break the v1.0.0 backward compatibility.
 *   New dependencies without justification.

@@ -19,7 +19,7 @@ The Broker Service has two main responsibilities:
 
 1.  **Trust Endpoint (`/.well-known/jwks.json`)**
     *   Hosts the Public Keys that Publishers use to verify the "Visas".
-    *   Publishers add this URL to their `IMAGXPNext` config.
+    *   Publishers add this URL to their `IMAGXP` config.
 
 2.  **Issuance Endpoint (`/issue-visa`)**
     *   Accepts payment from an Agent (e.g., via Stripe, Crypto, or Credits).

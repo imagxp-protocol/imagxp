@@ -62,6 +62,27 @@ export async function importPublicKey(keyData: string): Promise<CryptoKey> {
   );
 }
 
+export async function exportPrivateKey(key: CryptoKey): Promise<string> {
+  const exported = await crypto.subtle.exportKey("pkcs8", key);
+  return btoa(String.fromCharCode(...new Uint8Array(exported)));
+}
+
+export async function importPrivateKey(keyData: string): Promise<CryptoKey> {
+  const binaryString = atob(keyData);
+  const bytes = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+
+  return await crypto.subtle.importKey(
+    "pkcs8",
+    bytes,
+    { name: "ECDSA", namedCurve: "P-256" },
+    true,
+    ["sign"]
+  );
+}
+
 // Helpers
 function bufToHex(buffer: ArrayBuffer): string {
   return Array.from(new Uint8Array(buffer))

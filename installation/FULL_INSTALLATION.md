@@ -67,6 +67,16 @@ npm install @imagxp/protocol
 npm install jose uuid
 ```
 
+### Step 1.5: Environment Variables (.env)
+Create a `.env` file in your root directory. This ensures your Publisher Identity is persistent.
+
+```bash
+# .env
+# 1. Your Publisher Identity (Generate via `npx imagxp generate-identity`)
+IMAGXP_PRIVATE_KEY="MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEH..."
+IMAGXP_PUBLIC_KEY="MFKwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE..."
+```
+
 ### Step 2: The Gatekeeper (`src/middleware.ts`)
 This code acts as a "Bouncer". It intercepts requests and runs the flow described above (Steps A-C).
 
@@ -125,8 +135,23 @@ npx imagxp generate-identity
 ```
 
 **It gives you 2 things:**
-1.  **A Private Key (Secret)**: Save in `.env` (`IMAGXP_PRIVATE_KEY`). **NEVER SHARE THIS.**
+1.  **A Public/Private Key Pair**: Save in `.env`. **NEVER SHARE THE PRIVATE KEY.**
+    ```bash
+    # .env
+    IMAGXP_AGENT_ID="openai.com"
+    IMAGXP_PRIVATE_KEY="MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEH..."
+    IMAGXP_PUBLIC_KEY="MFKwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE..."
+    ```
+
 2.  **A Public File (ID Card)**: Save as `imagxp-agent.json`. Upload to `yoursite.com/.well-known/imagxp-agent.json`.
+    ```json
+    {
+      "agent_id": "openai.com",
+      "public_key": "MFKwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE...",
+      "contact_email": "security@openai.com",
+      "version": "1.0"
+    }
+    ```
 
 ### Step 2: The "Universal" Crawler
 This code works for **ANY** URL on the internet. You don't need a list.

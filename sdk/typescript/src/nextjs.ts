@@ -4,7 +4,9 @@
  */
 import { IMAGXPPublisher } from './publisher.js';
 import { AccessPolicy, ContentOrigin, UnauthenticatedStrategy, IdentityCache } from './types.js';
-import { generateKeyPair } from './crypto.js';
+import { generateKeyPair, importPrivateKey, importPublicKey } from './crypto.js';
+
+declare const process: any;
 
 type NextRequest = any;
 type NextResponse = any;
@@ -39,7 +41,20 @@ export class IMAGXPNext {
       config.cache
     );
     this.origin = ContentOrigin[config.meta.origin];
-    this.ready = generateKeyPair().then(keys => this.publisher.initialize(keys));
+
+    const publisher = this.publisher;
+    this.ready = (async () => {
+      let keys: CryptoKeyPair | null = null;
+      if (process.env.IMAGXP_PRIVATE_KEY && process.env.IMAGXP_PUBLIC_KEY) {
+        try {
+          const privateKey = await importPrivateKey(process.env.IMAGXP_PRIVATE_KEY);
+          const publicKey = await importPublicKey(process.env.IMAGXP_PUBLIC_KEY);
+          keys = { privateKey, publicKey };
+        } catch (e) { console.error("IMAGXP: Failed to load keys from env", e); }
+      }
+      if (!keys) keys = await generateKeyPair();
+      await publisher.initialize(keys);
+    })();
   }
 
   static init(config: IMAGXPConfig): IMAGXPNext {

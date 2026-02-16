@@ -2,8 +2,10 @@
  * Layer 2: Agent SDK
  */
 import { AccessPurpose, ProtocolHeader, SignedAccessRequest, FeedbackSignal, QualityFlag, AgentIdentityManifest } from './types.js';
-import { generateKeyPair, signData, exportPublicKey } from './crypto.js';
+import { generateKeyPair, signData, exportPublicKey, importPrivateKey, importPublicKey } from './crypto.js';
 import { IMAGXP_VERSION } from './constants.js';
+
+declare const process: any;
 
 export interface AccessOptions {
   adsDisplayed?: boolean;
@@ -18,9 +20,25 @@ export class IMAGXPAgent {
    * @param customAgentId For PRODUCTION, this should be your domain (e.g., "bot.openai.com")
    */
   async initialize(customAgentId?: string) {
-    this.keyPair = await generateKeyPair();
+    if (process.env.IMAGXP_PRIVATE_KEY && process.env.IMAGXP_PUBLIC_KEY) {
+      // 1. Load Persistent Identity from Environment
+      console.log(`[IMAGXP] Loading Agent Identity from Environment...`);
+      try {
+        const privateKey = await importPrivateKey(process.env.IMAGXP_PRIVATE_KEY);
+        const publicKey = await importPublicKey(process.env.IMAGXP_PUBLIC_KEY);
+        this.keyPair = { privateKey, publicKey };
+      } catch (e) {
+        console.error("Failed to load keys from env:", e);
+      }
+    }
+
+    // Fallback or Normal Init
+    if (!this.keyPair) {
+      this.keyPair = await generateKeyPair();
+    }
+
     // Use the provided ID (authentic) or generate a session ID (ephemeral)
-    this.agentId = customAgentId || "agent_" + Math.random().toString(36).substring(7);
+    this.agentId = process.env.IMAGXP_AGENT_ID || customAgentId || "agent_" + Math.random().toString(36).substring(7);
   }
 
   async createAccessRequest(
