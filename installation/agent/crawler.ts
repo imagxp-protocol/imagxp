@@ -1,8 +1,10 @@
 
 import { IMAGXPAgent } from '@imagxp/protocol';
 
+declare const process: any;
+
 async function main() {
-    // 1. Load your Identity (Requires .env IMAGXP_PRIVATE_KEY)
+    // 1. Load your Identity (Automatically loads from .env if present)
     const agent = await IMAGXPAgent.init();
 
     // 2. The Crawler Loop (Universal)

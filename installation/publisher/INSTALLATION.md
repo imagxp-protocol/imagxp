@@ -21,6 +21,20 @@ IMAGXP_PRIVATE_KEY="MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEH..."
 IMAGXP_PUBLIC_KEY="MFKwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE..."
 ```
 
+## Step 1.6: Public Identity (`public/.well-known/imagxp-agent.json`)
+You must host your Public Key so Brokers and Agents can verify you.
+Create a file at `public/.well-known/imagxp-agent.json`:
+
+```json
+{
+  "agent_id": "your-site.com",
+  "public_key": "MFKwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE...",
+  "contact": "admin@your-site.com",
+  "version": "1.0"
+}
+```
+
+
 ## Step 2: The Gatekeeper (`src/middleware.ts`)
 This code acts as a "Bouncer". It intercepts requests and runs the flow described above (Steps A-C).
 

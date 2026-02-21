@@ -8,8 +8,7 @@
 **IMAGXP** is the open standard for the AI-Web Economy.
 
 As AI Chatbots replace traditional web traffic, the **AdSense model is collapsing**, threatening the future of the open web. IMAGXP restores **Ecosystem Balance** by replacing the adversarial "Scraping War" with a cryptographic, automated handshake grounded in **Identity, Monetization, and Governance**. It ensures **Publishers** are paid and **Agents** get clean data.
-
-**🌐 Website:** [https://imagxp.dev](https://imagxp.dev)
+**🌐 Website:** [https://imagxp.com](https://imagxp.com)
 
 ---
 
@@ -95,7 +94,7 @@ export const middleware = imagxp.withProtection();
 | Topic | Description | Link |
 | :--- | :--- | :--- |
 | **Setup** | The Official Installation Guide | [INSTALLATION.md](./installation/INSTALLATION.md) |
-| **Spec** | The Technical Specification (v1.2) | [spec/v1.2.md](./spec/v1.2.md) |
+| **Spec** | The Technical Specification (v1.2) | [spec/v1.0.md](./spec/v1.0.md) |
 | **Logic** | System Architecture & Security | [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) |
 | **Mission** | The Rationale & Market Analysis | [docs/WHY_IMAGXP.md](./docs/WHY_IMAGXP.md) |
 

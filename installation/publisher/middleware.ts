@@ -3,6 +3,8 @@
 import { NextResponse } from 'next/server';
 import { IMAGXPNext } from '@imagxp/protocol';
 
+declare const process: any;
+
 // Initialize the Protocol Engine
 const imagxp = IMAGXPNext.init({
     meta: {

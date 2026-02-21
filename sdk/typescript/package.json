@@ -1,6 +1,6 @@
 {
   "name": "@imagxp/protocol",
-  "version": "1.0.0",
+  "version": "1.0.7",
   "description": "TypeScript reference implementation of IMAGXP v1.1",
   "keywords": [
     "imagxp",
@@ -21,6 +21,9 @@
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "imagxp": "./dist/cli.js"
+  },
   "exports": {
     ".": "./dist/index.js",
     "./dist/nextjs": "./dist/nextjs.js",
@@ -37,9 +40,17 @@
     "type": "git",
     "url": "https://github.com/imagxp-protocol/imagxp.git"
   },
+  "homepage": "https://imagxp.com",
+  "bugs": {
+    "url": "https://github.com/imagxp-protocol/imagxp/issues"
+  },
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@types/node-fetch": "^2.6.13",

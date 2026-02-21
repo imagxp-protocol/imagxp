@@ -1,0 +1,6 @@
+{
+    "agent_id": "my-blog-publisher.vercel.app",
+    "public_key": "Paste your Public Key here",
+    "contact": "admin@example.com",
+    "version": "1.0"
+}
