@@ -4,6 +4,8 @@
 import { AccessPurpose, ProtocolHeader, SignedAccessRequest, FeedbackSignal, QualityFlag, AgentIdentityManifest } from './types.js';
 import { generateKeyPair, signData, exportPublicKey, importPrivateKey, importPublicKey } from './crypto.js';
 import { IMAGXP_VERSION } from './constants.js';
+import stringify from 'fast-json-stable-stringify';
+import { v4 as uuidv4 } from 'uuid';
 
 declare const process: any;
 
@@ -51,6 +53,7 @@ export class IMAGXPAgent {
     const header: ProtocolHeader = {
       v: IMAGXP_VERSION,
       ts: new Date().toISOString(),
+      nonce: uuidv4(),
       agent_id: this.agentId,
       resource,
       purpose,
@@ -59,7 +62,9 @@ export class IMAGXPAgent {
       }
     };
 
-    const signature = await signData(this.keyPair.privateKey, JSON.stringify(header));
+    // Use fast-json-stable-stringify to ensure canonical JSON bytes across all languages
+    const canonicalHeaderString = stringify(header);
+    const signature = await signData(this.keyPair.privateKey, canonicalHeaderString);
     const publicKeyExport = await exportPublicKey(this.keyPair.publicKey);
 
     return { header, signature, publicKey: publicKeyExport };

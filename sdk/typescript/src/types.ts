@@ -106,6 +106,7 @@ export interface AccessPolicy {
 export interface ProtocolHeader {
   v: '1.1';
   ts: string;
+  nonce: string;
   agent_id: string;
   resource: string;
   purpose: AccessPurpose;

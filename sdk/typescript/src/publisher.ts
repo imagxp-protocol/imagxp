@@ -4,9 +4,10 @@
  */
 import { HEADERS, MAX_CLOCK_SKEW_MS, WELL_KNOWN_AGENT_PATH } from './constants.js';
 import { exportPublicKey, signData, verifySignature } from './crypto.js';
-import { AccessPolicy, AccessPurpose, AgentIdentityManifest, ContentOrigin, EvaluationResult, IdentityCache, SignedAccessRequest, UnauthenticatedStrategy } from './types.js';
+import { AccessPolicy, AccessPurpose, AgentIdentityManifest, ContentOrigin, EvaluationResult, IdentityCache, SignedAccessRequest, UnauthenticatedStrategy, ProtocolHeader } from './types.js';
 import { verifyJwt } from './proof.js';
 import { jwtVerify, createRemoteJWKSet } from 'jose';
+import stringify from 'fast-json-stable-stringify';
 
 interface VerificationResult {
   allowed: boolean;
@@ -46,6 +47,7 @@ export class IMAGXPPublisher {
   private keyPair: CryptoKeyPair | null = null;
   private unauthenticatedStrategy: UnauthenticatedStrategy;
   private cache: IdentityCache;
+  private seenNonces: Map<string, number> = new Map();
 
   // Default TTL: 1 Hour
   private readonly CACHE_TTL_SECONDS = 3600;
@@ -334,14 +336,28 @@ export class IMAGXPPublisher {
     requestPublicKey: CryptoKey,
   ): Promise<VerificationResult> {
 
-    // 1. Replay Attack Prevention
+    // 1. Replay Attack Prevention (Timestamp + Nonce Tracking)
     const requestTime = new Date(request.header.ts).getTime();
-    if (Math.abs(Date.now() - requestTime) > MAX_CLOCK_SKEW_MS) {
+    const now = Date.now();
+    if (Math.abs(now - requestTime) > MAX_CLOCK_SKEW_MS) {
       return { allowed: false, reason: 'TIMESTAMP_INVALID: Clock skew too large.', identityVerified: false };
     }
 
-    // 2. Crypto Verification
-    const signableString = JSON.stringify(request.header);
+    if (!request.header.nonce) {
+      return { allowed: false, reason: 'REPLAY_VIOLATION: Missing cryptographic nonce.', identityVerified: false };
+    }
+
+    const nonceKey = `${request.header.agent_id}:${request.header.nonce}`;
+    if (this.seenNonces.has(nonceKey)) {
+      return { allowed: false, reason: 'REPLAY_ATTACK: Nonce has already been used within the current time window.', identityVerified: false };
+    }
+
+    // Store the nonce and clean up old nonces to prevent memory leaks
+    this.seenNonces.set(nonceKey, now);
+    this.cleanupNonces(now);
+
+    // 2. Crypto Verification (Must use canonical stringify!)
+    const signableString = stringify(request.header);
     const isCryptoValid = await verifySignature(requestPublicKey, signableString, request.signature);
     if (!isCryptoValid) return { allowed: false, reason: 'CRYPTO_FAIL: Signature invalid.', identityVerified: false };
 
@@ -438,6 +454,17 @@ export class IMAGXPPublisher {
     } catch (e: any) {
       console.warn(`[BROKER] ❌ Invalid Token:`, e.message);
       return false;
+    }
+  }
+
+  private cleanupNonces(now: number) {
+    // Only cleanup roughly every 100 requests to avoid overhead
+    if (Math.random() > 0.01) return;
+
+    for (const [key, timestamp] of this.seenNonces.entries()) {
+      if (Math.abs(now - timestamp) > MAX_CLOCK_SKEW_MS) {
+        this.seenNonces.delete(key);
+      }
     }
   }
 
