@@ -149,7 +149,7 @@ npx imagxp generate-identity
       "agent_id": "openai.com",
       "public_key": "MFKwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE...",
       "contact_email": "security@openai.com",
-      "version": "1.0"
+      "version": "1.1"
     }
     ```
 

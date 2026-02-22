@@ -1,6 +1,6 @@
 {
     "agent_id": "your-agent-domain.com",
     "public_key": "MFKwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE...",
-    "contact": "security@your-agent-domain.com",
-    "version": "1.0"
+    "contact_email": "security@openai.com",
+    "version": "1.1"
 }

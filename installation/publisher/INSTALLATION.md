@@ -30,7 +30,7 @@ Create a file at `public/.well-known/imagxp-agent.json`:
   "agent_id": "your-site.com",
   "public_key": "MFKwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE...",
   "contact": "admin@your-site.com",
-  "version": "1.0"
+  "version": "1.1"
 }
 ```
 
